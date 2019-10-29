@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Switch,
   ScrollView,
+  Linking,
 } from 'react-native';
 
 import Accordion from '@ercpereda/react-native-accordion';
@@ -75,40 +76,6 @@ const Data = [
   },
 ];
 
-const Header = ({isOpen}) => (
-  <View
-    style={{
-      paddingTop: 15,
-      paddingRight: 15,
-      paddingLeft: 15,
-      paddingBottom: 15,
-      borderBottomWidth: 1,
-      borderBottomColor: '#a9a9a9',
-      backgroundColor: '#f9f9f9',
-    }}>
-    <Text>{`${isOpen ? '-' : '+'} Click to Expand`}</Text>
-  </View>
-);
-
-const Content = (
-  <View
-    style={{
-      display: 'flex',
-      backgroundColor: '#31363D',
-    }}>
-    <Text
-      style={{
-        paddingTop: 15,
-        paddingRight: 15,
-        paddingBottom: 15,
-        paddingLeft: 15,
-        color: '#fff',
-      }}>
-      This content is hidden in the accordion
-    </Text>
-  </View>
-);
-
 export default class Challenges extends Component {
   render() {
     var list = Data.map((data, index) => {
@@ -126,32 +93,18 @@ export default class Challenges extends Component {
             }}
             style={styles.image}></Image>
           <View style={styles.headerText}>
-            <Text
-              style={{
-                fontFamily: 'DINPro-Bold',
-                lineHeight: 22,
-                color: '#fff',
-              }}>
-              {data.title}
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'DINPro-Regular',
-                lineHeight: 22,
-                color: '#fff',
-              }}>
-              {data.sponsor}
-            </Text>
-            <Text
-              style={{
-                color: '#fff',
-                lineHeight: 22,
-                fontFamily: 'DINPro-Light',
-              }}>
+            <Text style={styles.headerMain}>{data.title}</Text>
+            <Text style={styles.headerSponsor}>{data.sponsor}</Text>
+            <Text style={styles.headerPrize}>
               <Icon name="trophy" style={{paddingRight: 5}}></Icon>
               {'  ' + data.prize}
             </Text>
           </View>
+          {isOpen ? (
+            <Icon name="arrow-up" style={styles.arrowIcon}></Icon>
+          ) : (
+            <Icon name="arrow-down" style={styles.arrowIcon}></Icon>
+          )}
         </View>
       );
 
@@ -159,18 +112,22 @@ export default class Challenges extends Component {
         <View
           style={[
             index % 2 == 1
-              ? {backgroundColor: '#464343'}
-              : {backgroundColor: '#2D2D2D'},
+              ? {backgroundColor: '#464343', height: 130}
+              : {backgroundColor: '#2D2D2D', height: 130},
           ]}>
           <Text style={styles.contentText}>
             <Text style={{fontWeight: 'bold'}}>Sponsor: </Text> {data.sponsor}
           </Text>
-          <Text style={styles.contentText}>
-            <Text style={{fontWeight: 'bold'}}>Prize: </Text> {data.prize}
-          </Text>
+
           <Text style={styles.contentText}>
             <Text style={{fontWeight: 'bold'}}>Description: </Text>
             {data.description}
+          </Text>
+
+          <Text
+            onPress={() => Linking.openURL('https://technica2019.devpost.com/')}
+            style={styles.devpost}>
+            To Devpost <Icon style={{fontSize: 20}} name="external-link"></Icon>
           </Text>
         </View>
       );
@@ -185,9 +142,15 @@ export default class Challenges extends Component {
       );
     });
 
-    return <View style={styles.container}>{list}</View>;
+    return (
+      <View style={styles.container}>
+        <ScrollView>{list}</ScrollView>
+      </View>
+    );
   }
 }
+
+toDevpost = () => {};
 
 const styles = StyleSheet.create({
   container: {
@@ -203,7 +166,6 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingRight: 15,
     paddingLeft: 30,
-    paddingBottom: 15,
 
     flexDirection: 'row',
     alignContent: 'center',
@@ -212,8 +174,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     alignContent: 'center',
     justifyContent: 'center',
+    lineHeight: 22,
     top: 0,
     left: 40,
+  },
+  headerMain: {
+    color: '#fff',
+    lineHeight: 22,
+    fontFamily: 'DINPro-Bold',
+  },
+  headerSponsor: {
+    color: '#fff',
+    lineHeight: 22,
+    fontFamily: 'DINPro-Regular',
+  },
+  headerPrize: {
+    color: '#fff',
+    lineHeight: 22,
+    fontFamily: 'DINPro-Light',
   },
   content: {
     paddingTop: 15,
@@ -225,7 +203,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontFamily: 'DINPro-Regular',
     color: '#fff',
-    paddingTop: 15,
+    paddingTop: 5,
     paddingRight: 15,
     paddingBottom: 15,
     paddingLeft: 15,
@@ -236,5 +214,19 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 200 / 2,
     alignContent: 'center',
+  },
+  devpost: {
+    fontFamily: 'DINPro-Regular',
+
+    position: 'absolute',
+    right: 16,
+    bottom: 16,
+    color: '#fff',
+  },
+  arrowIcon: {
+    position: 'absolute',
+    right: 8,
+    bottom: 8,
+    color: '#fff',
   },
 });
