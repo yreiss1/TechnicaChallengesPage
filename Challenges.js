@@ -3,15 +3,10 @@ import {
   View,
   Text,
   Image,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-  AppState,
   StyleSheet,
-  Switch,
   ScrollView,
   Linking,
+  Dimensions,
 } from 'react-native';
 
 import Accordion from '@ercpereda/react-native-accordion';
@@ -36,7 +31,8 @@ const Data = [
   },
   {
     sponsor: 'Amazon',
-    title: 'Best hack to make Jeff Bezos richer',
+    title:
+      'Best hack to make Jeff Bezos richer farfiu sbdgbs dfkvs dfvsdfvs dbfv',
     prize: '$1000 Amazon Gift Card',
     image:
       'http://g-ec2.images-amazon.com/images/G/01/social/api-share/amazon_logo_500500._V323939215_.png',
@@ -52,7 +48,7 @@ const Data = [
   },
   {
     sponsor: 'Technica',
-    title: 'The best hack to make UMD football good',
+    title: 'The best hack to make UMD football good fsgffgs',
     prize: 'Pride in our school once more',
     image:
       'https://pbs.twimg.com/profile_images/1006417489981419520/0azCeqeg.jpg',
@@ -150,8 +146,6 @@ export default class Challenges extends Component {
   }
 }
 
-toDevpost = () => {};
-
 const styles = StyleSheet.create({
   container: {
     paddingTop: 70,
@@ -162,7 +156,6 @@ const styles = StyleSheet.create({
   },
   accordion: {},
   header: {
-    height: 90,
     paddingTop: 15,
     paddingRight: 15,
     paddingLeft: 30,
@@ -182,6 +175,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     lineHeight: 22,
     fontFamily: 'DINPro-Bold',
+    width: Math.round(Dimensions.get('window').width) - 120,
   },
   headerSponsor: {
     color: '#fff',
@@ -192,6 +186,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     lineHeight: 22,
     fontFamily: 'DINPro-Light',
+    paddingBottom: 10,
   },
   content: {
     paddingTop: 15,
@@ -212,12 +207,11 @@ const styles = StyleSheet.create({
     top: 5,
     width: 50,
     height: 50,
-    borderRadius: 200 / 2,
+    borderRadius: 150 / 2,
     alignContent: 'center',
   },
   devpost: {
     fontFamily: 'DINPro-Regular',
-
     position: 'absolute',
     right: 16,
     bottom: 16,
